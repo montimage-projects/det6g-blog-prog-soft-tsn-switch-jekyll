@@ -9,10 +9,10 @@ author:
   avatar : "/assets/images/photo-frank_duerr.jpg"
   links :
     - label: Homepage
-      icon: "fab fa fa-home"
+      icon: "fas fa-fw fa-home"
       url: "https://deterministic6g.eu"
     - label: Blog
-      icon: "fab fa fa-blog"
+      icon: "fas fa-fw fa-blog"
       url: "https://deterministic6g.eu"
     - label: "Twitter"
       icon: "fab fa-fw fa-twitter-square"
@@ -21,10 +21,10 @@ author:
       icon: "fab fa-fw fa-github"
       url: "https://github.com/DETERMINISTIC6G"
     - label: "LinkedIn"
-      icon: "fab fa-brands fa-linkedin"
+      icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/company/deterministic6g/"
     - label: "YouTube"
-      icon: "fab fa-brands fa-youtube"
+      icon: "fab fa-fw fa-youtube"
       url: "https://www.youtube.com/@DETERMINISTIC6G/videos"
 ---
 In this blog post, we present the DETERMINISTIC6G Network Delay Emulator for Linux.
