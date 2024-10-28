@@ -22,7 +22,9 @@ description: >- # this means to ignore newlines until "baseurl:"
 #baseurl: "" # the subpath of your site, e.g. /blog
 domain: duerrfk.github.io
 #url: https://duerrfk.github.io 
-url: http://vssdn2-2.infra.informatik.uni-stuttgart.de:6060
+#url: http://vssdn2-2.infra.informatik.uni-stuttgart.de:6060
+url: https://ipvs.informatik.uni-stuttgart.de
+baseurl: /vs/det6gblog
 #twitter_username: jekyllrb
 #github_username:  jekyll
 
