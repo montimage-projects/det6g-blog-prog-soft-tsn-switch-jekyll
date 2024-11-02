@@ -24,14 +24,14 @@ domain: duerrfk.github.io
 #url: https://duerrfk.github.io 
 #url: http://vssdn2-2.infra.informatik.uni-stuttgart.de:6060
 url: https://ipvs.informatik.uni-stuttgart.de
-baseurl: /vs/det6gblog
+#baseurl: /vs/det6gblog
 #twitter_username: jekyllrb
 #github_username:  jekyll
 
 # Build settings
 markdown: kramdown
 #theme: minimal-mistakes-jekyll
-remote_theme: mmistakes/minimal-mistakes@4.26.2
+remote_theme: duerrfk/minimal-mistakes@multiauthor
 plugins:
   - jekyll-feed
   - jekyll-include-cache
@@ -55,29 +55,9 @@ locale: "en-US"
 
 logo: "/assets/images/logo-det6g.png"
 
-author:
-  name : "DETERMINISTIC6G"
-  bio : Deterministic end-to-end communication with 6G
-  links :
-    - label: Homepage
-      icon: "fas fa-fw fa-home"
-      url: "https://deterministic6g.eu"
-    - label: Blog
-      icon: "fas fa-fw fa-blog"
-      url: "https://deterministic6g.eu"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/DETERMINISTIC6G"
-    - label: "Github"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/DETERMINISTIC6G"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/company/deterministic6g/"
-    - label: "YouTube"
-      icon: "fab fa-fw fa-youtube"
-      url: "https://www.youtube.com/@DETERMINISTIC6G/videos"
-
+authors:
+  - DETERMINISTIC6G
+  
 defaults:
   # _posts
   - scope:

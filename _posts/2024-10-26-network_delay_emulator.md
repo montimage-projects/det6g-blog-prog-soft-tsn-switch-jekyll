@@ -3,29 +3,8 @@ title:  "Network Delay Emulator: Emulating the Characteristic 5G/6G Network Dela
 date:   2024-10-26 00:00:00 +0100
 categories: linux tsn 5g 6g networking emulation
 tags: linux TSN networking emulation 5G 6G
-author:
-  name : "Frank Dürr"
-  bio : "Senior researcher and lecturer at University of Stuttgart"
-  avatar : "/assets/images/photo-frank_duerr.jpg"
-  links :
-    - label: Homepage
-      icon: "fas fa-fw fa-home"
-      url: "https://deterministic6g.eu"
-    - label: Blog
-      icon: "fas fa-fw fa-blog"
-      url: "https://deterministic6g.eu"
-    - label: "Twitter"
-      icon: "fab fa-fw fa-twitter-square"
-      url: "https://twitter.com/DETERMINISTIC6G"
-    - label: "Github"
-      icon: "fab fa-fw fa-github"
-      url: "https://github.com/DETERMINISTIC6G"
-    - label: "LinkedIn"
-      icon: "fab fa-fw fa-linkedin"
-      url: "https://www.linkedin.com/company/deterministic6g/"
-    - label: "YouTube"
-      icon: "fab fa-fw fa-youtube"
-      url: "https://www.youtube.com/@DETERMINISTIC6G/videos"
+authors :
+  - Frank Duerr
 ---
 In this blog post, we present the DETERMINISTIC6G Network Delay Emulator for Linux.
 
