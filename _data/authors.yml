@@ -1,0 +1,49 @@
+DETERMINISTIC6G :
+  name : DETERMINISTIC6G Project
+  bio : Deterministic end-to-end communication with 6G
+  links :
+    - label: Homepage
+      icon: "fas fa-fw fa-home"
+      url: "https://deterministic6g.eu"
+    - label: Blog
+      icon: "fas fa-fw fa-blog"
+      url: "https://deterministic6g.eu"
+    - label: "Twitter"
+      icon: "fab fa-fw fa-twitter-square"
+      url: "https://twitter.com/DETERMINISTIC6G"
+    - label: "Github"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/DETERMINISTIC6G"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/company/deterministic6g/"
+    - label: "YouTube"
+      icon: "fab fa-fw fa-youtube"
+      url: "https://www.youtube.com/@DETERMINISTIC6G/videos"
+      
+Frank Duerr :
+  name : "Frank Dürr"
+  bio : "Senior researcher and lecturer at University of Stuttgart, Germany"
+  avatar : "/assets/images/photo-frank_duerr.jpg"
+  links :
+    - label: Homepage
+      icon: "fas fa-fw fa-home"
+      url: "https://www.ipvs.uni-stuttgart.de/institute/team/Duerr/"
+    
+Simon Egger :
+  name : "Simon Egger"
+  bio : "PhD candidate at University of Stuttgart, Germany"
+  avatar : "/assets/images/photo-simon_egger.jpg"
+  links :
+    - label: Homepage
+      icon: "fas fa-fw fa-home"
+      url: "https://www.ipvs.uni-stuttgart.de/de/institut/team/Egger-00001/"
+
+Jose Costa-Requena :
+  name : Jose Costa-Requena
+  bio : CEO of Cumucore, senior research manager and scientist at Aalto University, Finland.
+  avatar : "/assets/images/photo-jose_costa_requena.jpg"
+  links : 
+    - label: Homepage
+      icon: "fas fa-fw fa-home"
+      url: "https://research.aalto.fi/en/persons/jose-costa-requena"
