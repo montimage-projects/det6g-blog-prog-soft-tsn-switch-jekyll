@@ -19,11 +19,11 @@ name: "DETERMINISTIC6G"
 email: janos.harmatos@ericsson.com
 description: >- # this means to ignore newlines until "baseurl:"
   Blog of the DETERMINISTIC6G Project
-#domain: blog.deterministic6g.eu
-domain: ipvs.informatik.uni-stuttgart.de/vs/det6gblog-2
-#url: https://blog.deterministic6g.eu
-url: https://ipvs.informatik.uni-stuttgart.de
-baseurl: /vs/det6gblog-2
+domain: blog.deterministic6g.eu
+#domain: ipvs.informatik.uni-stuttgart.de/vs/det6gblog-2
+url: https://blog.deterministic6g.eu
+#url: https://ipvs.informatik.uni-stuttgart.de
+#baseurl: /vs/det6gblog-2
 #twitter_username: jekyllrb
 #github_username:  jekyll
 
