@@ -5,22 +5,21 @@ categories: Linux TSN networking edge cloud
 tags: Linux TSN networking edge cloud
 authors :
   - Frank Duerr
-  - Simon Egger
   - Jose Costa-Requena
 ---
 In this blog post, we explain how to set up a software TSN bridge implementing time-aware shaping with Linux on an edge cloud server.
 
 # tl;dr -- Takeaway Messages
 
-* Many networked real-time systems utilize edge computing servers.
-* Time-Sensitive Networking (TSN) is one technology to support deterministic real-time communication with its Time-Aware Shaper to connect edge cloud servers.
-* Using virtualization technologies like containers or virtual machines (VM) on edge servers requires software bridges to connect containers and/or VMs. The TSN network extends onto the edge server. 
+* Many networked real-time systems utilize edge computing servers to offload computations.
+* Time-Sensitive Networking (TSN) is one technology to support deterministic real-time communication with its Time-Aware Shaper to communicate with edge cloud servers.
+* Using virtualization technologies like containers or virtual machines (VM) on edge servers requires software bridges to connect containers, VMs, etc. The TSN network effectively extends onto the edge server. 
 * The Time-Aware Priority Shaper (TAPRIO) is one technology to implement the Time-Aware Shaper on Linux software bridges.
 * In this blog post, we explain and demonstrate how to combine TAPRIO and Linux virtual bridges into software TSN bridges. 
 
 # Motivation
 
-Networked real-time system often utilize an edge cloud computing environment to execute components on edge cloud servers. A prominent example are networked control systems, where the controller of the control systems is executed on an edge cloud server that communicates with the 'plant' consisting of sensors and actuators over the network as shown in the following figure.
+Networked real-time system often utilize an edge cloud computing environment to execute components on edge cloud servers. A prominent example are networked control systems, where the controller of the control systems is offloaded to an edge cloud server that communicates with the 'plant' consisting of sensors and actuators over the network as shown in the following figure.
 
 ![Networked control system]({{ site.url }}{{ site.baseurl }}/assets/images/networked_control_system.png "Networked control system"){: .align-center}
 
@@ -28,7 +27,7 @@ The DETERMINISTIC6G project describes a number of such applications in [this doc
 
 * Automated guided vehicles moving on a shop floor in a factory and communicating with edge cloud servers in the factory.
 * Exoskeletons assisting workers on a shop floor, which are remotely controlled from an edge cloud server in the factory.
-* Extended reality devices like Augmented Reality (AR) headsets displaying remote content from an edge server.
+* Extended reality devices like Augmented Reality (AR) headsets offloading compute-intensive tasks like rendering of images to an edge server.
 
 Real-time communication technologies are used to guarantee bounds on the network delay between plant and controller. Time-Sensitive Networking (TSN) is a popular technology to implement real-time communication over IEEE 802.3 (Ethernet) networks consisting of TSN bridges. In particular, the so-called Time-Aware Shaper (TAS) implemented by bridges is able to guarantee very low bounds on network delay and delay variation (jitter).
 
@@ -159,7 +158,7 @@ $ sudo ip link add veth-talker-a type veth peer name veth-talker-b
 $ sudo ip link add veth-listener-a numtxqueues 8 type veth peer name veth-listener-b numtxqueues 8
 ```
 
-Since TSN requires VLAN tags to carry PCP values, we also create VLAN interfaces (VLAN id 100) for one end of the virtual cable (the end attached to the namespace. All packets coming out of this VLAN device (from the namespace to the bridge) will carry a VLAN tag; for all incoming packets (from the bridge to the container), the VLAN tag is removed. The sending application (called talker in the following) defines SKB priorities as described above using the SO_PRIORITY socket option. This SKB priority is mapped to the PCP value of the VLAN header using the `todo` option. This ensures that all packets arriving at the bridge have a VLAN tag with defined PCP value. This also applies to packets coming from the physical network outside of the host, i.e., the bridge receives over all attached interfaces VLAN-tagges packets with PCP field:     
+Since TSN requires VLAN tags to carry PCP values, we also create VLAN interfaces (VLAN id 100) for one end of the virtual cable (the end attached to the namespace. All packets coming out of this VLAN device (from the namespace to the bridge) will carry a VLAN tag; for all incoming packets (from the bridge to the container), the VLAN tag is removed. The sending application (called talker in the following) defines SKB priorities as described above using the SO_PRIORITY socket option. This SKB priority is mapped to the PCP value of the VLAN header using the `SO_PRIORITY` option. This ensures that all packets arriving at the bridge have a VLAN tag with defined PCP value. This also applies to packets coming from the physical network outside of the host, i.e., the bridge receives over all attached interfaces VLAN-tagges packets with PCP field:     
 
 ```
 $ sudo ip link add link veth-talker-a name veth-t-a.100 type vlan id 100
@@ -184,10 +183,21 @@ $ sudo ip link set veth-listener-b master vbridge
 $ sudo ip link set enp2s0f0 master vbridge
 ```
 
+We must also bring all interfaces up:
+
+```
+$ sudo ip link set veth-talker-a up
+$ sudo ip link set veth-talker-b up
+$ sudo ip link set veth-listener-a up
+$ sudo ip link set veth-listener-b up
+$ sudo ip netns exec talker veth-t-a.100 up
+$ sudo ip netns exec listener veth-l-a.100 up
+```
+
 To perform traffic shaping on egress traffic, we need to assign TAPRIO QDiscs to all network interfaces shaping traffic in egress direction. In our example, we only define a TAPRIO QDisc for the virtual bridge interface towards the listener namespace to demonstrate the idea (in practice, all interfaces attached to the TSN bridge might have a TAPRIO QDisc). SKB priority 0 is mapped to traffic class 0; SKB priority 1 is mapped to traffic class 1 (all other SKB priorities are mapped to traffic class 0). The gate for traffic class 0 is always open (least significant bit always set); the gate for traffic class 1 is 100 ms closed and 50 ms open (cycle time is 150 ms): 
 
 ```
-$ tc qdisc replace dev veth-listener-b parent root handle 100 taprio \
+$ sudo tc qdisc replace dev veth-listener-b parent root handle 100 taprio \
 num_tc 2 \
 map 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \
 queues 1@0 1@1 \
@@ -203,13 +213,36 @@ $ sudo tc qdisc add dev veth-talker-b ingress
 $ sudo tc filter add dev veth-talker-b ingress prio 1 protocol 802.1Q flower vlan_prio 1 action skbedit priority 1
 ```
 
-Instead of the ingress QDisc you could also use other methods to perform the mapping (maybe less intuitive and more complex). todo: Simon
-
-# A Small Test
+# Test
 
 Finally, we can test our software TSN bridge that we have set up above. We start a talker in namespace `talker` sending UDP messages as fast as possible to the listener in namespace `listener` with SKB priority 1, which will be mapped to the PCP 1 by the VLAN device. PCP 1 will be mapped by the ingress QDisc to SKB 1 at the virtual bridge. TAPRIO maps SKB priority 1 to traffic class 1. The gate for traffic class 1 is open for 50 ms and closed for 100 ms. Therefore, we would expect to see this pattern in the traffic arriving at the talker.
 
-Traffic is captured with TCP dump at the listener:
+We start root shells in the talker and listener namespaces:
+
+```
+$ sudo ip netns exec talker /bin/bash
+$ sudo ip netns exec listener /bin/bash
+```
+
+Then set private IP addresses for talker and listener:
+
+```
+(talker) $ ip address add 10.0.1.1/24 dev veth-t-a.100
+```
+
+```
+(listener) $ ip address add 10.0.1.2/24 dev veth-l-a.100
+```
+
+On the listener side, we use netcat to receive and drop all received packets to port 6666:
+
+```
+(listener) $ nc -u -l -p 6666 > /dev/null
+```
+
+On the talker side, we use a custom C application, which sends UDP packets at a rate of 1000 pkt/s and sets the priority to 1 using the socket option SO_PRIORITY (an alternative application that can also set the required SO_PRIORITY socket option would be socat).
+
+Traffic is captured with TCP dump at the virtual listener interface, i.e., before VLAN tags are removed, so we can also check the correct tagging of packets with VLAN ID 100 and PCP value 1:
 
 ```
 $ sudo tcpdump -i veth-listener-a -w trace.pcap --time-stamp-precision=nano
@@ -219,4 +252,10 @@ The following figure shows the arrival times of packets at the listener. We draw
 
 ![Time-shaped traffic]({{ site.url }}{{ site.baseurl }}/assets/images/taprio-traffic.png "Time-shaped traffic"){: .align-center}
 
-As we can see, the packets arriving with the anticipated pattern in bursts of 50 ms length.
+As we can see, the packets arrive with the anticipated pattern in bursts of 50 ms length (gate for prio 1 open), so time-aware shaping is effective and working correctly.
+
+Using Wireshark, we can also inspect the packets received at the listener interface `veth-listener-a`, i.e., before VLAN tags are removed:
+
+![Packet inspection with Wireshark]({{ site.url }}{{ site.baseurl }}/assets/images/taprio-wireshark.png "Packet inspection with Wireshark"){: .align-center}
+
+We can see that packets indeed carry a VLAN tag with id 100, and the PCP value is 1, so also the VLAN tagging and PCP mapping works as intended. 
