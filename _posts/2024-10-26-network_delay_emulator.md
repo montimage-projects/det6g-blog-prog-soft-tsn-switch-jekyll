@@ -19,7 +19,7 @@ In this blog post, we present the DETERMINISTIC6G Network Delay Emulator for Lin
 
 Networked real-time systems are typically sensitive to network delay, i.e., their performance and safety depends on the delay of communicating messages between distributed system components. Moreover, many novel networked real-time systems include mobile devices that communicate with remote components over a wireless network such as 5G or future 6G mobile networks. The DETERMINISTIC6G project describes a number of such applications in [this document](https://deterministic6g.eu/images/deliverables/DETERMINISTIC6G-D1.1-v1.0.pdf), including:
 
-* Automated guided vehicles moving on a shop floor in a factory and communicting with machines and edge servers in the factory.
+* Automated guided vehicles moving on a shop floor in a factory and communicting with machines and edge cloud servers in the factory.
 * Smart farming where for instance drones monitore the field in front of a harvester to protect animals.
 * Exoskeletons assisting workers on a shop floor, which are remotely controlled from an edge cloud server in the factory.
 * Extended reality devices like Augmented Reality (AR) headsets displaying remotely rendered images. 
