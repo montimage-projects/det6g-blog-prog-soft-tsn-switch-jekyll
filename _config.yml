@@ -24,8 +24,8 @@ domain: blog.deterministic6g.eu
 url: https://blog.deterministic6g.eu
 
 #HN test
-#domain: montimage-projects.github.io
-#url: https://montimage-projects.github.io/
+domain: montimage-projects.github.io
+url: https://montimage-projects.github.io/
 
 #url: https://ipvs.informatik.uni-stuttgart.de
 #baseurl: /vs/det6gblog-2
