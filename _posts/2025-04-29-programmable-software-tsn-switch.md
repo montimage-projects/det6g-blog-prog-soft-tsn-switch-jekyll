@@ -70,8 +70,6 @@ After completing the logical processing, the VLAN Priority Code Point (PCP) in t
 
 Figure below show how each output packet is classified and attributed to corresponding TX queue based on its PCP:
 
-<img src="img/map.png" width="650px"/>
-
 ![Mapping of traffic class]({{ site.url }}{{ site.baseurl }}/assets/images/map.png "Mapping of traffic class"){: .align-center width="650px"}
 
 As PCP is a 3-bit value, there are maximumally 8 traffic classes. By dynamically changing PCP of a packet, we can control its TX queue, thus shape the egress traffic. This approach eliminates the need for static configurations or manual intervention, offering a flexibility in handling diverse traffic patterns at runtime.
@@ -221,7 +219,7 @@ In this test, we demonstrate that TC1 traffic can opportunistically use TC0's tr
 The switch's behavior is controlled by [switch.p4](./switch.p4) program. It contains multiple `control` blocks to parse Ethernet, VLAN, IPv4, UDP headers; perform basic routing; and dynamically adjust PCP value of each packet.
 While we won't cover all of these components due to space constraints, let's focus on the most relevant and interesting part, dynamic PCP adjustment, as shown in the snippet below:
 
-```P4
+```C
 //an array having only one element of 48 bits
 //  to store timestamp of the most recent packet belong to traffic class 0, TC0
 register <bit<48>>(1) last_tc0_packet_ts;
