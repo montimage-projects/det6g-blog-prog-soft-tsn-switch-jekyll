@@ -72,7 +72,7 @@ Figure below show how each output packet is classified and attributed to corresp
 
 ![Mapping of traffic class]({{ site.url }}{{ site.baseurl }}/assets/images/map.png "Mapping of traffic class"){: .align-center width="650px"}
 
-As PCP is a 3-bit value, there are maximumally 8 traffic classes. By dynamically changing PCP of a packet, we can control its TX queue, thus shape the egress traffic. This approach eliminates the need for static configurations or manual intervention, offering a flexibility in handling diverse traffic patterns at runtime.
+As PCP is a 3-bit value, there are maximumally 8 traffic classes. 
 
 
 ## Environment Setup
@@ -202,7 +202,7 @@ The essensital parameters are as below:
 
 - `queues 1@0 1@1`: map traffic classes to TX queues of the network device.
  Its values use the format `count@offset`. Specifically,
-    - map the firs traffic class (TC0) to 1 queue strating at offset 0 (first queue)
+    - map the firs traffic class (TC0) to 1 queue starting at offset 0 (first queue)
     - map the second traffic class (TC1) to 1 queue starting at offset 1 (second queue)
 
 - `sched-entry S 01 100000000 sched-entry S 03 50000000`: define the intervals, in nanoseconds, during which gates are open or closed. For the first 100ms, only the gate of 1st TX queue is opened. Then the next 50ms, gates of both 1st and 2nd (indicated by the 1st and 2nd bits of `03`) TX queues are opended. This means that, TX queue for TC0 is always available; the one for TC1 is 100 ms unavailable and 50 ms available (cycle time is 150 ms).
