@@ -22,6 +22,10 @@ description: >- # this means to ignore newlines until "baseurl:"
 domain: blog.deterministic6g.eu
 #domain: ipvs.informatik.uni-stuttgart.de/vs/det6gblog-2
 url: https://blog.deterministic6g.eu
+
+#HN test
+domain: montimage-projects.github.io
+url: https://montimage-projects.github.io/det6g-blog-prog-soft-tsn-switch-jekyll/
 #url: https://ipvs.informatik.uni-stuttgart.de
 #baseurl: /vs/det6gblog-2
 #twitter_username: jekyllrb

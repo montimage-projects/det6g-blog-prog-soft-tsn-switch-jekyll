@@ -47,3 +47,21 @@ Jose Costa-Requena :
     - label: Homepage
       icon: "fas fa-fw fa-home"
       url: "https://research.aalto.fi/en/persons/jose-costa-requena"
+
+Huu-Nghia Nguyen :
+  name  : "Huu-Nghia Nguyen"
+  bio   : "Senior researcher at Montimage"
+  avatar: "/assets/images/photo-huunghia.jpg"
+  links:
+    - label: "Montimage"
+      icon : "fas fa-fw fa-home"
+      url  : "https://montimage.eu/about"
+
+Edgardo Montes de Oca :
+  name  : "Edgardo Montes de Oca"
+  bio   : "CEO of Montimage"
+  avatar: "/assets/images/photo-edgardo.jpg"
+  links:
+    - label: "Montimage"
+      icon : "fas fa-fw fa-home"
+      url  : "https://montimage.eu/about"
