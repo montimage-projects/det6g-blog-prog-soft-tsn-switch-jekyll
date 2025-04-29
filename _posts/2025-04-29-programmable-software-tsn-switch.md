@@ -125,8 +125,6 @@ git apply ../bmv2/bmv2.patch
 
 As an example, we will implement a software TSN switch having an input port and an output port to connect a talker and a listener as shown in the following figure.
 
-<img src="img/testbed.png" width="500px" />
-
 ![Testbed]({{ site.url }}{{ site.baseurl }}/assets/images/testbed.png "Testbed"){: .align-center width="500px"}
 
 To implement this testbed on a single machine, the talker and listener are isolated in two separate containers to prevent direct communication between them. Each container, that is typically a Linux namespace, connects to the switch via a virtual Ethernet link that, like a cable, acutally has 2 ends. When a packet is sent to one end, it becomes available at the other.
@@ -219,7 +217,7 @@ In this test, we demonstrate that TC1 traffic can opportunistically use TC0's tr
 The switch's behavior is controlled by [switch.p4](./switch.p4) program. It contains multiple `control` blocks to parse Ethernet, VLAN, IPv4, UDP headers; perform basic routing; and dynamically adjust PCP value of each packet.
 While we won't cover all of these components due to space constraints, let's focus on the most relevant and interesting part, dynamic PCP adjustment, as shown in the snippet below:
 
-```C
+```c
 //an array having only one element of 48 bits
 //  to store timestamp of the most recent packet belong to traffic class 0, TC0
 register <bit<48>>(1) last_tc0_packet_ts;
