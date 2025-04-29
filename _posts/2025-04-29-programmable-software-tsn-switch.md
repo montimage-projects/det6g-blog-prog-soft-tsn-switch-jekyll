@@ -214,7 +214,7 @@ Based on the TAPRIO qdisc configuration described above, TC0 packets can be tran
 
 In this test, we demonstrate that TC1 traffic can opportunistically use TC0's transmission queue if it has remained idle for more than one second. For simplicity, we assign UDP packets with destination port 1000 to TC0, and all other traffic to TC1. We use UDP instead of TCP to avoid the influence of TCP's congestion control mechanisms which may impact traffic rate.
 
-The switch's behavior is controlled by [switch.p4](./switch.p4) program. It contains multiple `control` blocks to parse Ethernet, VLAN, IPv4, UDP headers; perform basic routing; and dynamically adjust PCP value of each packet.
+The switch's behavior is controlled by [switch.p4](https://github.com/DETERMINISTIC6G/det6g-blog-prog-soft-tsn-switch/blob/main/switch.p4) program. It contains multiple `control` blocks to parse Ethernet, VLAN, IPv4, UDP headers; perform basic routing; and dynamically adjust PCP value of each packet.
 While we won't cover all of these components due to space constraints, let's focus on the most relevant and interesting part, dynamic PCP adjustment, as shown in the snippet below:
 
 ```c
